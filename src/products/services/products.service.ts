@@ -39,20 +39,14 @@ export class ProductsService {
     return newProduct;
   }
 
-  update(id: number, payload: UpdateProductDto) {
-    const productFound = this.products.findIndex((item) => item.id === id);
-    let message = '';
-    if (productFound > 0) {
-      this.products[productFound] = {
-        id: id,
-        ...payload,
-      };
-      message = 'Product updated';
-    } else {
-      message = 'Product not found';
-    }
-
-    return message;
+  update(id: number, changes: UpdateProductDto) {
+    const product = this.findOne(id);
+    const index = this.products.findIndex((item) => item.id === id);
+    this.products[index] = {
+      ...product,
+      ...changes,
+    };
+    return this.products[index];
   }
 
   delete(id: number) {
