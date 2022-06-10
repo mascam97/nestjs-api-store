@@ -7,7 +7,8 @@ import {
   IsOptional,
   Min,
   ValidateIf,
-  ValidateNested
+  ValidateNested,
+  IsMongoId,
 } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
 
@@ -59,4 +60,8 @@ export class FilterProductsDto {
   @ValidateIf((params) => params.minPrice)
   @IsPositive()
   maxPrice: number;
+
+  @IsNotEmpty()
+  @IsMongoId()
+  readonly brand: string;
 }
