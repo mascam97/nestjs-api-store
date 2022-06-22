@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import { Db } from 'mongodb';
+import { Model } from 'mongoose';
+import * as bcrypt from 'bcrypt';
+import { InjectModel } from '@nestjs/mongoose';
 
 import { User } from '../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
@@ -9,8 +13,11 @@ import { ProductsService } from './../../products/services/products.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private productsService: ProductsService) {}
-
+  constructor(
+    private productsService: ProductsService,
+    @Inject('MONGO') private databaseMongo: Db,
+    @InjectModel(User.name) private userModel: Model<User>,
+  ) {}
   private counterId = 1;
 
   private users: User[] = [
@@ -43,15 +50,19 @@ export class UsersService {
     return user;
   }
 
-  create(data: CreateUserDto) {
-    this.counterId = this.counterId + 1;
-    const newUser = {
-      id: this.counterId,
-      ...data,
-    };
-    this.users.push(newUser);
-    return newUser;
-  }
+    async create(data: CreateUserDto) {
+      const newModel = new this.userModel(data);
+      return newModel.save();
+      const hashPassword = await bcrypt.hash(newModel.password, 10);
+      newModel.password = hashPassword;
+      const model = await newModel.save();
+      const { password, ...rta } = model.toJSON();
+      return rta;
+    }
+
+    findByEmail(email: string) {
+      return this.userModel.findOne({ email }).exec();
+    }
 
   update(id: number, changes: UpdateUserDto) {
     const user = this.findOne(id);
