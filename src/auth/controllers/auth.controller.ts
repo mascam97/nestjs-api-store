@@ -11,7 +11,6 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('login')
   login(@Req() req: Request) {
-    return req.user;
     const user = req.user as User;
     return this.authService.generateJWT(user);
   }

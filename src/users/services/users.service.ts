@@ -1,15 +1,11 @@
-import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { Db } from 'mongodb';
 import { Model } from 'mongoose';
-import * as bcrypt from 'bcrypt';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { User } from '../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
-
-import { Order } from '../entities/orders.entity';
-
-import { ProductsService } from './../../products/services/products.service';
+import { ProductsService } from '../../products/services/products.service';
 
 @Injectable()
 export class UsersService {
@@ -18,23 +14,21 @@ export class UsersService {
     @Inject('MONGO') private databaseMongo: Db,
     @InjectModel(User.name) private userModel: Model<User>,
   ) {}
-  private counterId = 1;
-
-  private users: User[] = [
-    {
-      id: 1,
-      email: 'name@mail.com',
-      password: 'password',
-      role: 'admin',
-    },
-  ];
 
   findAll() {
-    return this.users;
+    return this.userModel.find().exec();
   }
 
-  async getOrderByUser(id: number) {
-    const user = this.findOne(id);
+  async findOne(id: string) {
+    return this.userModel.findById(id);
+  }
+
+  findByEmail(email: string) {
+    return this.userModel.findOne({ email }).exec();
+  }
+
+  async getOrdersByUser(userId: string) {
+    const user = await this.findOne(userId);
     return {
       date: new Date(),
       user,
@@ -42,44 +36,18 @@ export class UsersService {
     };
   }
 
-  findOne(id: number) {
-    const user = this.users.find((item) => item.id === id);
-    if (!user) {
-      throw new NotFoundException(`User #${id} not found`);
-    }
-    return user;
+  create(data: CreateUserDto) {
+    const newModel = new this.userModel(data);
+    return newModel.save();
   }
 
-    async create(data: CreateUserDto) {
-      const newModel = new this.userModel(data);
-      return newModel.save();
-      const hashPassword = await bcrypt.hash(newModel.password, 10);
-      newModel.password = hashPassword;
-      const model = await newModel.save();
-      const { password, ...rta } = model.toJSON();
-      return rta;
-    }
-
-    findByEmail(email: string) {
-      return this.userModel.findOne({ email }).exec();
-    }
-
-  update(id: number, changes: UpdateUserDto) {
-    const user = this.findOne(id);
-    const index = this.users.findIndex((item) => item.id === id);
-    this.users[index] = {
-      ...user,
-      ...changes,
-    };
-    return this.users[index];
+  update(id: string, changes: UpdateUserDto) {
+    return this.userModel
+      .findByIdAndUpdate(id, { $set: changes }, { new: true })
+      .exec();
   }
 
-  remove(id: number) {
-    const index = this.users.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw new NotFoundException(`User #${id} not found`);
-    }
-    this.users.splice(index, 1);
-    return true;
+  remove(id: string) {
+    return this.userModel.findByIdAndDelete(id);
   }
 }

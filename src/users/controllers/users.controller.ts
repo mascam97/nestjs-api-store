@@ -6,9 +6,8 @@ import {
   Body,
   Put,
   Delete,
-  ParseIntPipe,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { UsersService } from '../services/users.service';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
@@ -24,13 +23,13 @@ export class UsersController {
   }
 
   @Get(':id')
-  get(@Param('id', ParseIntPipe) id: number) {
+  get(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
-  @Get(':id/orders') //  👈 new endpoint
-  getOrders(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.getOrderByUser(id);
+  @Get(':id/orders')
+  getOrders(@Param('id') id: string) {
+    return this.usersService.getOrdersByUser(id);
   }
 
   @Post()
@@ -38,16 +37,8 @@ export class UsersController {
     return this.usersService.create(payload);
   }
 
-  @Put(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() payload: UpdateUserDto,
-  ) {
-    return this.usersService.update(id, payload);
-  }
-
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.remove(+id);
+  remove(@Param('id') id: string) {
+    return this.usersService.remove(id);
   }
 }

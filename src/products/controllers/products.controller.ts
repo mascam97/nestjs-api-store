@@ -37,11 +37,6 @@ export class ProductsController {
     return this.productsService.findAll(params);
   }
 
-  @Get('filter')
-  getProductFilter() {
-    return `yo soy un filter`;
-  }
-
   @Public()
   @Get(':productId')
   getOne(@Param('productId', MongoIdPipe) productId: string) {
