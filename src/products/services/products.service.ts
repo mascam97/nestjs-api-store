@@ -23,11 +23,7 @@ export class ProductsService {
       if (minPrice && maxPrice) {
         filters.price = { $gte: minPrice, $lte: maxPrice };
       }
-      return this.productModel
-        .find(filters)
-        .skip(offset)
-        .limit(limit)
-        .exec();
+      return this.productModel.find(filters).skip(offset).limit(limit).exec();
     }
     return this.productModel.find().exec();
   }
@@ -50,7 +46,7 @@ export class ProductsService {
       .findByIdAndUpdate(id, { $set: changes }, { new: true })
       .exec();
 
-      if (!product) {
+    if (!product) {
       throw new NotFoundException(`Product #${id} not found`);
     }
 

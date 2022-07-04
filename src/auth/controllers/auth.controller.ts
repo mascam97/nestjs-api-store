@@ -10,7 +10,10 @@ import { UsersService } from '../../users/services/users.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService, private usersService: UsersService) {}
+  constructor(
+    private authService: AuthService,
+    private usersService: UsersService,
+  ) {}
   @UseGuards(AuthGuard('local'))
   @Post('login')
   login(@Req() req: Request) {

@@ -4,7 +4,6 @@ import { Document, Types } from 'mongoose';
 import { User } from './user.entity';
 import { Product } from '../../products/entities/products.entity';
 
-
 @Schema()
 export class Order extends Document {
   @Prop({ type: Date })

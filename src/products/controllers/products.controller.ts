@@ -8,7 +8,6 @@ import {
   Put,
   Delete,
   UseGuards,
-  HttpCode,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';

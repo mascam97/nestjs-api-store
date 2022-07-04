@@ -1,4 +1,4 @@
-import { Injectable,NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
@@ -10,11 +10,7 @@ export class OrdersService {
   constructor(@InjectModel(Order.name) private orderModel: Model<Order>) {}
 
   findAll() {
-    return this.orderModel
-      .find()
-      .populate('user')
-      .populate('products')
-      .exec();
+    return this.orderModel.find().populate('user').populate('products').exec();
   }
 
   async findOne(id: string) {
@@ -36,8 +32,7 @@ export class OrdersService {
       throw new NotFoundException(`Order #${id} not found`);
     }
 
-    return order.update({ $set: changes }, { new: true })
-      .exec();
+    return order.update({ $set: changes }, { new: true }).exec();
   }
 
   async remove(id: string) {

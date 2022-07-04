@@ -60,9 +60,9 @@ export class OrdersController {
   updateProducts(
     @Param('id') id: string,
     @Body() payload: AddProductsToOrderDto,
-    ) {
-      return this.ordersService.addProducts(id, payload.productsIds);
-    }
+  ) {
+    return this.ordersService.addProducts(id, payload.productsIds);
+  }
 
   @Roles(Role.CUSTOMER)
   @Delete(':id')

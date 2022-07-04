@@ -1,4 +1,4 @@
-import { Injectable, Inject, NotFoundException} from '@nestjs/common';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { Db } from 'mongodb';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -41,7 +41,7 @@ export class UsersService {
     };
   }
 
-  async create(data: CreateUserDto|RegisterUserDto) {
+  async create(data: CreateUserDto | RegisterUserDto) {
     const newModel = new this.userModel(data);
     const hashPassword = await bcrypt.hash(newModel.password, 10);
     newModel.password = hashPassword;
@@ -50,7 +50,7 @@ export class UsersService {
     return rta;
   }
 
-// TODO: Add update function
+  // TODO: Add update function
 
   async remove(id: string) {
     const user = await this.userModel.findById(id).exec();
