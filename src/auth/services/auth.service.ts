@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-
 import { JwtService } from '@nestjs/jwt';
+
 import { UsersService } from './../../users/services/users.service';
 import { User } from './../../users/entities/user.entity';
 import { PayloadToken } from './../models/token.model';
@@ -26,6 +26,7 @@ export class AuthService {
   }
 
   generateJWT(user: User) {
+    // TODO: Add refresh token
     const payload: PayloadToken = { role: user.role, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),

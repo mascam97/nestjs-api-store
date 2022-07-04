@@ -1,27 +1,25 @@
-# Nest API Store
+# Nestjs API Store ![Stable](https://img.shields.io/badge/stable-1.0.0-blue) ![Status](https://img.shields.io/badge/status-refactoring-yellow) ![Passing](https://img.shields.io/badge/build-passing-green) ![Docker build](https://img.shields.io/badge/docker_build-passing-green)
 
-_Store of products for a little grocery stores_
+_Minimal store products_
 
 ## Project goal :goal_net:
 
-**June 2022**: Personal project to learn **JavaScript as Backend with TypeScript and Nestjs**.
+**June 2022**: Personal project to learn **JavaScript as Backend with Nestjs and TypeScript**.
 
-### Achievements June 2022 :star2:
+## Achievements June 2022 :star2:
 
-As Backend with **PHP - Laravel** I knew everything about an API. So I developed fastly the project by following some online courses, where I achieved:
+As Backend with **PHP - Laravel** I knew about APIs. So I developed the project by following some online courses, where I achieved:
 
 - Implemented Validations, Services, environment variables, documentation with **Swagger** and more
 - Configured **NoSQL with MongoDB for the Database** and **Mongoose as a ODM**
 - Implemented **Authentication with Passport.js - JWT**
 - Implemented **Authorization with Guards**
 
+Then I made a [Project definition](project.definition.md) to define the main business logic with a scope that allows scalability. Defining only the necessary resources to fit the **Project goal**.
+
 ### TODOS
 
-**As Backend Developer with experience** I just limited myself to follow the courses and learned, so the project is not stable, and for make it stable I needed first:
-
-- **Project definition**: The course create models like brands, categories, users and roles, it defined its own business logic for learning porpuse. From my experience this **business logic should be well defined with a scope that allows scalability**
-- **Testing**: The course just got focused on learning porpuse, everything was tested from Postman despite **in a professional work Test-Driven Development is used**. From my experience, everything must have testing to garantee the functionality and not spend so much time in testing from Postman
-- **Project scope**: A personal project should have a defined goal with its scope
+- **Testing**: After to improve and refactor the project, the testing is essential
 
 ## Getting Started :rocket:
 
@@ -56,7 +54,7 @@ Create the images and run the services (MongoDB and MongoExpress):
 docker compose up
 ```
 
-Create a database called `nest-api-store` in Mongo Express from 8081 (http://localhost/).
+Create a database called `nestjs-store` in Mongo Express from 8081 (http://localhost:8081/).
 
 Finally, defines an `API_KEY` in .env file and run the server
 
@@ -98,7 +96,7 @@ $ npm run test:cov
 - [Nestjs](https://nestjs.com/): A progressive Node.js framework
 - [Swagger](https://swagger.io/): API Documentation & Design Tools for Teams
 - [Passport.js with Nestjs](https://docs.nestjs.com/security/authentication): Authentication middleware for Node.js
-- [Mongoose with Nestjs](https://docs.nestjs.com/techniques/mongodb):elegant mongodb object modeling for node.js
+- [Mongoose with Nestjs](https://docs.nestjs.com/techniques/mongodb): Elegant mongodb object modeling for node.js
 
 ### Authors
 
