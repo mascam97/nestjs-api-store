@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable,NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
@@ -12,13 +12,17 @@ export class OrdersService {
   findAll() {
     return this.orderModel
       .find()
-      .populate('customer')
+      .populate('user')
       .populate('products')
       .exec();
   }
 
   async findOne(id: string) {
-    return this.orderModel.findById(id);
+    const order = await this.orderModel.findById(id).exec();
+    if (!order) {
+      throw new NotFoundException(`Order #${id} not found`);
+    }
+    return order;
   }
 
   create(data: CreateOrderDto) {
@@ -26,23 +30,33 @@ export class OrdersService {
     return newModel.save();
   }
 
-  update(id: string, changes: UpdateOrderDto) {
-    return this.orderModel
-      .findByIdAndUpdate(id, { $set: changes }, { new: true })
+  async update(id: string, changes: UpdateOrderDto) {
+    const order = await this.orderModel.findById(id).exec();
+    if (!order) {
+      throw new NotFoundException(`Order #${id} not found`);
+    }
+
+    return order.update({ $set: changes }, { new: true })
       .exec();
   }
 
-  remove(id: string) {
-    return this.orderModel.findByIdAndDelete(id);
+  async remove(id: string) {
+    const order = await this.orderModel.findById(id).exec();
+    if (!order) {
+      throw new NotFoundException(`Order #${id} not found`);
+    }
+    return this.orderModel.remove(order).exec();
   }
 
   async removeProduct(id: string, productId: string) {
+    // TODO: validate Ids as mongoId
     const order = await this.orderModel.findById(id);
     order.products.pull(productId);
     return order.save();
   }
 
   async addProducts(id: string, productsIds: string[]) {
+    // TODO: validate Ids as mongoId
     const order = await this.orderModel.findById(id);
     productsIds.forEach((pId) => order.products.push(pId));
     return order.save();

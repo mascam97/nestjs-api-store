@@ -7,7 +7,8 @@ import {
   Body,
   Put,
   Delete,
-  UseGuards
+  UseGuards,
+  HttpCode,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
@@ -35,11 +36,6 @@ export class ProductsController {
   @ApiOperation({ summary: 'List of products' })
   getProducts(@Query() params: FilterProductsDto) {
     return this.productsService.findAll(params);
-  }
-
-  @Get('filter')
-  getProductFilter() {
-    return `yo soy un filter`;
   }
 
   @Public()

@@ -13,8 +13,14 @@ const API_KEY_PROD = 'API_KEY_PROD';
   imports: [
     MongooseModule.forRootAsync({
       useFactory: (configService: ConfigType<typeof config>) => {
-        const { connection, user, password, host, port, dbName } =
-          configService.mongo;
+        const {
+          connection,
+          user,
+          password,
+          host,
+          port,
+          dbName,
+        } = configService.mongo;
         return {
           uri: `${connection}://${host}:${port}`,
           user,
@@ -33,8 +39,14 @@ const API_KEY_PROD = 'API_KEY_PROD';
     {
       provide: 'MONGO',
       useFactory: async (configService: ConfigType<typeof config>) => {
-        const { connection, user, password, host, port, dbName } =
-          configService.mongo;
+        const {
+          connection,
+          user,
+          password,
+          host,
+          port,
+          dbName,
+        } = configService.mongo;
         const uri = `${connection}://${user}:${password}@${host}:${port}/?authSource=admin&readPreference=primary`;
         const client = new MongoClient(uri);
         await client.connect();

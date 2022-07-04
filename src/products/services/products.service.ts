@@ -25,12 +25,11 @@ export class ProductsService {
       }
       return this.productModel
         .find(filters)
-        .populate('brand')
         .skip(offset)
         .limit(limit)
         .exec();
     }
-    return this.productModel.find().populate('brand').exec();
+    return this.productModel.find().exec();
   }
 
   async findOne(id: string) {
@@ -46,17 +45,23 @@ export class ProductsService {
     return newProduct.save();
   }
 
-  update(id: string, changes: UpdateProductDto) {
-    const product = this.productModel
+  async update(id: string, changes: UpdateProductDto) {
+    const product = await this.productModel
       .findByIdAndUpdate(id, { $set: changes }, { new: true })
       .exec();
-    if (!product) {
+
+      if (!product) {
       throw new NotFoundException(`Product #${id} not found`);
     }
+
     return product;
   }
 
-  remove(id: string) {
-    return this.productModel.findByIdAndDelete(id);
+  async remove(id: string) {
+    const product = await this.productModel.findById(id).exec();
+    if (!product) {
+      throw new NotFoundException(`Product #${id} not found`);
+    }
+    return this.productModel.remove(product).exec();
   }
 }
