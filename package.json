@@ -1,8 +1,8 @@
 {
-  "name": "nest-api-store",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "name": "nestjs-api-store",
+  "version": "1.0.0",
+  "description": "Minimal store products",
+  "author": "mascam97",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
