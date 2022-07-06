@@ -1,4 +1,4 @@
-# Nestjs API Store ![Stable](https://img.shields.io/badge/stable-1.1.0-blue) ![Status](https://img.shields.io/badge/status-refactoring-yellow) ![Passing](https://img.shields.io/badge/build-passing-green) ![Coverage](https://img.shields.io/badge/coverage-33%-red) ![Docker build](https://img.shields.io/badge/docker_build-passing-green)
+# Nestjs API Store ![Stable](https://img.shields.io/badge/stable-1.1.0-blue) ![Status](https://img.shields.io/badge/status-refactoring-yellow) ![Passing](https://img.shields.io/badge/build-passing-green) ![Coverage](https://img.shields.io/badge/coverage-33/100-red) ![Docker build](https://img.shields.io/badge/docker_build-passing-green)
 
 _Minimal store products_
 
@@ -24,6 +24,7 @@ Then I made a [Project definition](project.definition.md) to define the main bus
 - **Add unit testing**: There are some files made by default for some components, these does not work
 - **Add Continuous Integration**: Add some GitHub Actions for the testing
 - **Add Docker container for the Nodejs project**: The project is run in a local environment, it should in a container as database in a the same network
+- **Improve business logic**: There are some rules to define and fix, a review after making testing
 
 ## Getting Started :rocket:
 
