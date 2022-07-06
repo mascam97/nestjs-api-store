@@ -1,4 +1,4 @@
-# Nestjs API Store ![Stable](https://img.shields.io/badge/stable-1.0.0-blue) ![Status](https://img.shields.io/badge/status-refactoring-yellow) ![Passing](https://img.shields.io/badge/build-passing-green) ![Docker build](https://img.shields.io/badge/docker_build-passing-green)
+# Nestjs API Store ![Stable](https://img.shields.io/badge/stable-1.1.0-blue) ![Status](https://img.shields.io/badge/status-refactoring-yellow) ![Passing](https://img.shields.io/badge/build-passing-green) ![Coverage](https://img.shields.io/badge/coverage-33%-red) ![Docker build](https://img.shields.io/badge/docker_build-passing-green)
 
 _Minimal store products_
 
@@ -14,12 +14,16 @@ As Backend with **PHP - Laravel** I knew about APIs. So I developed the project 
 - Configured **NoSQL with MongoDB for the Database** and **Mongoose as a ODM**
 - Implemented **Authentication with Passport.js - JWT**
 - Implemented **Authorization with Guards**
+- Added some **e2e Testing** for basic features
 
 Then I made a [Project definition](project.definition.md) to define the main business logic with a scope that allows scalability. Defining only the necessary resources to fit the **Project goal**.
 
 ### TODOS
 
-- **Testing**: After to improve and refactor the project, the testing is essential
+- **Improve testing e2e**: Add fixtures to make some data, test for seller and administrator role
+- **Add unit testing**: There are some files made by default for some components, these does not work
+- **Add Continuous Integration**: Add some GitHub Actions for the testing
+- **Add Docker container for the Nodejs project**: The project is run in a local environment, it should in a container as database in a the same network
 
 ## Getting Started :rocket:
 
@@ -76,17 +80,22 @@ NODE_ENV=prod npm run start:dev
 
 ## Testing
 
-TODO
+There are a special container for testing, the following commands are used to manage it
 
 ```bash
-# unit tests
-$ npm run test
+$ npm run db:test:up
 
-# e2e tests
+$ npm run db:test:rm
+
+$ npm run db:test:restart
+```
+
+Note: there are a `.env.test` file with the credentials for that testing database
+
+Finally run the e2e testing with
+
+```bash
 $ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
 ---
@@ -97,6 +106,7 @@ $ npm run test:cov
 - [Swagger](https://swagger.io/): API Documentation & Design Tools for Teams
 - [Passport.js with Nestjs](https://docs.nestjs.com/security/authentication): Authentication middleware for Node.js
 - [Mongoose with Nestjs](https://docs.nestjs.com/techniques/mongodb): Elegant mongodb object modeling for node.js
+- [PactumJS](https://pactumjs.github.io/): Free & OpenSource REST API Testing Tool for all levels in a Test Pyramid
 
 ### Authors
 
@@ -108,6 +118,7 @@ You're free to contribute to this project by submitting [issues](https://github.
 
 ### References :books:
 
+- [NestJs Course for Beginners - Create a REST API > e2e tests with pactumJs](https://youtu.be/GHTA143_b-s?t=8848)
 - [NestJS Course: Authentication with Passport and JWT](https://platzi.com/cursos/nestjs-auth/)
 - [NestJS Course: Data Persistence with MongoDB](https://platzi.com/cursos/nestjs-mongodb/)
 - [NestJS Course: Modular Programming, Documentation with Swagger and Deploy](https://platzi.com/cursos/nestjs-modular/)

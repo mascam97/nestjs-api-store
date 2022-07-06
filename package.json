@@ -1,10 +1,10 @@
 {
   "name": "nestjs-api-store",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Minimal store products",
   "author": "mascam97",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -18,7 +18,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json --forceExit",
+    "db:test:rm": "docker compose rm mongo-test -s -f -v",
+    "db:test:up": "docker compose up mongo-test -d",
+    "db:test:restart": "npm run db:test:rm && npm run db:test:up"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
@@ -62,6 +65,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "28.0.3",
+    "pactum": "^3.1.10",
     "prettier": "^2.3.2",
     "source-map-support": "^0.5.20",
     "supertest": "^6.1.3",
